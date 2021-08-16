@@ -1,4 +1,3 @@
-import {BrowserOptions} from 'puppeteer/index'
 export interface IVp{
     /**
          * page width in pixels.

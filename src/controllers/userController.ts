@@ -15,9 +15,9 @@ export const UserController = {
       const data = fs.readdirSync('./users');
       const json = [];
       for (const file of data) {
-        const arquivo = fs.readFileSync(`./users/${file}`);
-        const arquivoFormated = Buffer.from(arquivo).toString();
-        json.push(JSON.parse(arquivoFormated));
+        const fileData = fs.readFileSync(`./users/${file}`);
+        const formattedFileData = Buffer.from(fileData).toString();
+        json.push(JSON.parse(formattedFileData));
       }
       res.send(json);
     } catch (error) {
@@ -30,7 +30,7 @@ export const UserController = {
       const data = fs.readFileSync(`./users/${req.params.email}.json`);
       res.send(data);
     } catch (error) {
-      res.status(400).send('Email Inváliddo');
+      res.status(400).send('Email inválido.');
     }
   },
 
@@ -42,7 +42,7 @@ export const UserController = {
       await user.start();
       res.send(user);
     } catch (error) {
-      res.status(400).send('Email Inváliddo');
+      res.status(400).send('Email inválido.');
     }
   },
 

@@ -10,7 +10,7 @@ export class User {
 
   public browser: string = '';
 
-  public idioma: string = '';
+  public language: string = '';
 
   public viewport: keyof typeof VIEW_PORTS = 'WEB';
 
@@ -20,12 +20,12 @@ export class User {
 
   public async start() {
     const browser = await puppeteer.launch({
-      headless: false,
+      headless: true,
       userDataDir: `./tmp/${this.email}`,
       args: ['--no-sandbox'],
       defaultViewport: VIEW_PORTS[this.viewport],
-      
     });
+    
     const page = await browser.newPage();
     page.setUserAgent(`Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36`);
     await page.goto('https://antoinevastel.com/bots/datadome');
