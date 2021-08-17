@@ -6,7 +6,7 @@ export class User {
 
   public email: string = '';
 
-  public SO: string = '';
+  public OS: string = '';
 
   public browser: string = '';
 
@@ -19,15 +19,23 @@ export class User {
   }
 
   public async start() {
-    const browser = await puppeteer.launch({
-      headless: true,
-      userDataDir: `./tmp/${this.email}`,
-      args: ['--no-sandbox'],
-      defaultViewport: VIEW_PORTS[this.viewport],
+    puppeteer.launch({
+        headless: true,
+        userDataDir: `./tmp/${this.email}`,
+        args: ['--no-sandbox'],
+        defaultViewport: VIEW_PORTS[this.viewport],
+      }).then(async browser => {
+      console.log('Running tests..');
+
+      const page = await browser.newPage();
+      await page.setJavaScriptEnabled(true);
+      await page.goto('https://antoinevastel.com/bots/datadome');
+      await page.waitForTimeout(5000);
+      await page.screenshot({ path: 'testresult.png', fullPage: true });
+      
+      console.log(`All done, check the screenshot. ✨`);
+      
+      await browser.close();
     });
-    
-    const page = await browser.newPage();
-    page.setUserAgent(`Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36`);
-    await page.goto('https://antoinevastel.com/bots/datadome');
   }
 }
